@@ -1,0 +1,3 @@
+<div class="flex gap-2 px-6 py-5 gap-x-5 flex-wrap">
+  <app-todolist *ngFor="let tdl of todolists" [title]="tdl.title" [tasks]="tasks[tdl.id]"/>
+</div>
