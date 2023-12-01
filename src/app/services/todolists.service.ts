@@ -18,4 +18,13 @@ export class TodolistsService {
     this.todolists.push({id, title, filter: 'all'})
     this.taskService.onCreateNewTodolist(id)
   }
+
+  changeTodolistTitle(todo_id: string, title: string) {
+    this.todolists = this.todolists.map(tdl => tdl.id === todo_id ? {...tdl, title} : {...tdl})
+  }
+
+  deleteTodolist(todo_id: string) {
+    this.todolists = this.todolists.filter(tdl => tdl.id !== todo_id)
+    this.taskService.onDeleteTodolist(todo_id)
+  }
 }

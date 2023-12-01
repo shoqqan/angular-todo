@@ -15,11 +15,26 @@ export class TasksService {
 
   createTask(todo_id: string, title: string) {
     this.tasks = {...this.tasks, [todo_id]: [{id: Date.now().toString(), title, isDone: false}, ...this.tasks[todo_id]]}
-    console.log(this.tasks)
   }
 
   onCreateNewTodolist(id: string) {
     this.tasks = {...this.tasks, [id]: []}
   }
 
+  onDeleteTodolist(id: string) {
+    delete this.tasks[id]
+  }
+
+  changeTaskName(todo_id: string, id: string, title: string) {
+    this.tasks = {
+      ...this.tasks,
+      [todo_id]: this.tasks[todo_id].map((task) => task.id === id ? ({...task, title}) : {...task})
+    }
+  }
+
+  deleteTask(todo_id: string, id: string) {
+    this.tasks = {
+      ...this.tasks, [todo_id]: this.tasks[todo_id].filter(task => task.id != id)
+    }
+  }
 }

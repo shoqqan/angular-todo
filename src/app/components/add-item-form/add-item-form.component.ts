@@ -20,7 +20,9 @@ export class AddItemFormComponent {
   }
 
   onAddItem() {
-    this.addItem.emit(this.form.value.title as string)
-    this.form.reset()
+    if (this.form.value.title!.trim().length > 0) {
+      this.addItem.emit(this.form.value.title as string)
+      this.form.reset()
+    }
   }
 }

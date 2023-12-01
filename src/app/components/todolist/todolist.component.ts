@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ITask} from "../../models/tasks";
 import {TasksService} from "../../services/tasks.service";
+import {TodolistsService} from "../../services/todolists.service";
 
 @Component({
   selector: 'app-todolist',
@@ -11,7 +12,10 @@ export class TodolistComponent {
   @Input() title: string
   @Input() tasks: ITask[]
 
-  constructor(public tasksService: TasksService) {
+  constructor(
+    public tasksService: TasksService,
+    public todolistService: TodolistsService
+  ) {
     this.id = ''
     this.title = ''
     this.tasks = []
