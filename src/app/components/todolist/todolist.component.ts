@@ -25,20 +25,7 @@ export class TodolistComponent implements AfterViewInit {
   }
 
   onChangeFilter(filter: FilterType) {
-    switch (filter) {
-      case "all": {
-        this.filter = "all"
-        return this.filteredTasks = this.tasksService.tasks[this.id]
-      }
-      case "active": {
-        this.filter = "active"
-        return this.filteredTasks = this.tasksService.tasks[this.id].filter(el => !el.isDone)
-      }
-      case "done": {
-        this.filter = "done"
-        return this.filteredTasks = this.tasksService.tasks[this.id].filter(el => el.isDone)
-      }
-    }
+    this.filter = filter
   }
 
   ngAfterViewInit(): void {
