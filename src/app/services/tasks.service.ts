@@ -37,4 +37,10 @@ export class TasksService {
       ...this.tasks, [todo_id]: this.tasks[todo_id].filter(task => task.id != id)
     }
   }
+
+  changeTaskStatus(todo_id: string, id: string, status: boolean) {
+    this.tasks = {
+      ...this.tasks, [todo_id]: this.tasks[todo_id].map((el) => (el.id === id ? {...el, isDone: status} : {...el}))
+    }
+  }
 }

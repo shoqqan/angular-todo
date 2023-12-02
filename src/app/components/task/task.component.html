@@ -1,7 +1,7 @@
 <div class="w-full flex justify-between px-2 py-4">
   <div class="flex gap-2">
     <p appEditable>{{title}}</p>
-    <input type="checkbox" [checked]="isDone"/>
+    <input type="checkbox" [checked]="isDone" (change)="taskService.changeTaskStatus(todo_id,id,!isDone)"/>
   </div>
   <button class="w-8" (click)="taskService.deleteTask(todo_id,id)">
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24">
