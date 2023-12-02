@@ -7,6 +7,7 @@ import {TaskComponent} from './components/task/task.component';
 import {AddItemFormComponent} from './components/add-item-form/add-item-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EditableDirective} from './directives/editable.directive';
+import { FilterTasksPipe } from './pipe/filter-tasks.pipe';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {EditableDirective} from './directives/editable.directive';
     TaskComponent,
     AddItemFormComponent,
     EditableDirective,
+    FilterTasksPipe,
   ],
   imports: [
     BrowserModule,
