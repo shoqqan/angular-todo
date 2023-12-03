@@ -1,6 +1,6 @@
 <div class="w-full flex justify-between px-2 py-4">
   <div class="flex gap-3 border-b">
-    <p appEditable>{{title}}</p>
+    <p appEditable (edit)="taskService.changeTaskName(todo_id,id, $event)">{{title}}</p>
     <input type="checkbox" [checked]="isDone" (change)="taskService.changeTaskStatus(todo_id,id,!isDone)"/>
   </div>
   <button class="w-6" (click)="taskService.deleteTask(todo_id,id)">

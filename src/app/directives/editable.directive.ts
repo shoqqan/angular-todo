@@ -1,50 +1,38 @@
-import {Directive, ElementRef, HostBinding, HostListener, Optional} from '@angular/core';
+import {Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output} from '@angular/core';
 
-import {TasksService} from "../services/tasks.service";
-import {TodolistsService} from "../services/todolists.service";
-import {TodolistComponent} from "../components/todolist/todolist.component";
-import {TaskComponent} from "../components/task/task.component";
-
-type componentType = "APP-TASK" | "APP-TODOLIST"
 
 @Directive({
   selector: '[appEditable]'
 })
 export class EditableDirective {
-  constructor(
-    private ref: ElementRef,
-    private taskService: TasksService,
-    private todolistService: TodolistsService,
-    private todolistComponent: TodolistComponent,
-    @Optional() public taskComponent: TaskComponent
-  ) {
+
+  constructor(private ref: ElementRef) {
   }
 
-  component: componentType = this.ref.nativeElement.parentElement.parentElement.nodeName
+  @Output()
+
+  edit = new EventEmitter<string>()
+
 
   @HostBinding('attr.contenteditable')
   contenteditable = false;
 
   inputValue = ''
+  oldValue = ''
 
   onChange() {
-    if (this.component === "APP-TASK") {
-      if (this.inputValue.trim().length === 0) {
-        this.contenteditable = false
-        this.inputValue = this.taskService.tasks[this.todolistComponent.id].find(el => el.id === this.taskComponent.id)!.title
-      }
-      this.taskService.changeTaskName(this.todolistComponent.id, this.taskComponent.id, this.inputValue)
+    if (this.inputValue.trim().length > 0) {
+      this.edit.emit(this.inputValue as string)
+      this.contenteditable = false
     } else {
-      if (this.inputValue.trim().length === 0) {
-        this.contenteditable = false
-        this.inputValue = this.todolistService.todolists.find(tdl => tdl.id === this.todolistComponent.id)!.title
-      }
-      this.todolistService.changeTodolistTitle(this.todolistComponent.id, this.inputValue)
+      this.ref.nativeElement.textContent = this.oldValue
+      this.contenteditable = false
     }
   }
 
   @HostListener('click')
-  edit() {
+  onEditClick() {
+    this.oldValue = this.ref.nativeElement.textContent
     this.contenteditable = true
   }
 

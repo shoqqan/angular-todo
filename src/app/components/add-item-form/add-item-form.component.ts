@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class AddItemFormComponent {
   @Input() placehold = ''
   @Output() addItem = new EventEmitter<string>()
+  clicked = false
   form = new FormGroup({
     title: new FormControl<string>('', [
       Validators.required,
@@ -20,9 +21,12 @@ export class AddItemFormComponent {
   }
 
   onAddItem() {
-    if (this.form.value.title!.trim().length > 0) {
+    this.clicked = true
+    if (!this.title.errors) {
       this.addItem.emit(this.form.value.title as string)
       this.form.reset()
+    } else {
+
     }
   }
 }
