@@ -1,27 +1,35 @@
-# AngularTodo
+<h2>About the project</h2>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+  <p>
+     App to manage your day, and write tasks with great and minimalistic design
+     This application is developing on Angular 🅰️
+  </p>
 
-## Development server
+  <br>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Technologies 👉 Angular, TailwindCSS</p>
 
-## Build
+<br>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+🌐 Live Demo: <a href='https://angular-todo-gilt.vercel.app'>Live Demo</a>
 
-## Running unit tests
+<h3>Created with:</h3>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+» Angular <br>
+» TailwindCSS <br>
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<h2>Screenshots of the Project 📸</h2>
+<br>
 
-## Further help
+<div align='center'>
+<img src='https://github.com/shoqqan/angular-todo/assets/108088790/76c03645-b196-4e27-977f-e11b98ad19c3'/>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+</div>
+<br>
+
+
+
+
