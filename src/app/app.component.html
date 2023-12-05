@@ -4,6 +4,6 @@
     <app-add-item-form (addItem)="todolistsService.createTodolist($event)" placehold="What to do?"/>
   </div>
   <div class="flex gap-2 px-6 py-5 gap-x-5 flex-wrap">
-    <app-todolist *ngFor="let tdl of todolistsService.todolists" [title]="tdl.title" [id]="tdl.id" [tasks]="tasksService.tasks[tdl.id]"/>
+    <app-todolist *ngFor="let tdl of todolists" [title]="tdl.title" [id]="tdl.id" [tasks]="tasks[tdl.id]"/>
   </div>
 </div>

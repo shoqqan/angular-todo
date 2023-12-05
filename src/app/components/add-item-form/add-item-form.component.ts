@@ -25,6 +25,9 @@ export class AddItemFormComponent {
     if (!this.title.errors) {
       this.addItem.emit(this.form.value.title as string)
       this.form.reset()
+      Object.keys(this.form.controls).forEach(controlName => {
+        this.form.get(controlName)?.setErrors(null);
+      });
     } else {
 
     }
