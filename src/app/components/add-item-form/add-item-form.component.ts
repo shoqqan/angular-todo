@@ -24,10 +24,7 @@ export class AddItemFormComponent {
     this.clicked = true
     if (!this.title.errors) {
       this.addItem.emit(this.form.value.title as string)
-      this.form.reset()
-      Object.keys(this.form.controls).forEach(controlName => {
-        this.form.get(controlName)?.setErrors(null);
-      });
+      this.form.reset();
     } else {
 
     }

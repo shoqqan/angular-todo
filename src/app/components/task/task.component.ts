@@ -11,10 +11,22 @@ export class TaskComponent {
   @Input() title: string
   @Input() isDone: boolean
 
-  constructor(public taskService: TasksService) {
-    this.todo_id=''
+  constructor(private taskService: TasksService) {
+    this.todo_id = ''
     this.id = ''
     this.title = ''
     this.isDone = false
+  }
+
+  changeName(title: string) {
+    this.taskService.changeTaskName(this.todo_id, this.id, title)
+  }
+
+  changeStatus() {
+    this.taskService.changeTaskStatus(this.todo_id, this.id, !this.isDone)
+  }
+
+  delete() {
+    this.taskService.deleteTask(this.todo_id, this.id)
   }
 }

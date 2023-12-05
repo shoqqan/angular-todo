@@ -16,8 +16,8 @@ export class TodolistComponent implements AfterViewInit {
   filteredTasks: ITask[] = []
 
   constructor(
-    public tasksService: TasksService,
-    public todolistService: TodolistsService
+    private tasksService: TasksService,
+    private todolistService: TodolistsService
   ) {
     this.id = ''
     this.title = ''
@@ -26,6 +26,18 @@ export class TodolistComponent implements AfterViewInit {
 
   onChangeFilter(filter: FilterType) {
     this.filter = filter
+  }
+
+  createTask(title: string) {
+    this.tasksService.createTask(this.id, title)
+  }
+
+  changeTitle(title: string) {
+    this.todolistService.changeTodolistTitle(this.id, title)
+  }
+
+  delete() {
+    this.todolistService.deleteTodolist(this.id)
   }
 
   ngAfterViewInit(): void {
