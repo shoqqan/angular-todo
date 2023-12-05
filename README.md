@@ -1,7 +1,7 @@
 <h2>About the project</h2>
 
   <p>
-     App to manage your day, and write tasks with great and minimalistic design
+     App to manage your day, and write tasks with great and minimalistic design <br> <br>
      This application is developing on Angular 🅰️
   </p>
 
@@ -9,7 +9,7 @@
 
 
 
-Technologies 👉 Angular, TailwindCSS</p>
+<b>Technologies</b> 👉 Angular, TailwindCSS</p>
 
 <br>
 
