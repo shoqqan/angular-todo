@@ -1,9 +1,11 @@
-<form [formGroup]="form" (ngSubmit)="onAddItem()" class="flex gap-x-5 items-center">
-  <input [placeholder]="placehold | titlecase" type="text" formControlName="title" class="px-4 py-2 rounded-2xl border">
-  <button type="submit"
-          class="flex px-4 py-2 justify-center items-center text-amber-50 bg-[#2383e2] text-sm border-1 shadow-lg rounded-lg transition-all hover:bg-[#0077d4]">
+<form (ngSubmit)="onAddItem()" [formGroup]="form" class="flex gap-x-5 items-center">
+  <input [placeholder]="placehold | titlecase" class="px-4 py-2 rounded-2xl border" formControlName="title" type="text">
+  <button
+    class="flex px-4 py-2 justify-center items-center text-amber-50 bg-[#2383e2] text-sm border-1 shadow-lg rounded-lg transition-all hover:bg-[#0077d4]"
+    type="submit">
     New
   </button>
 </form>
 <p *ngIf="title.errors?.required && (title.touched || clicked)" class="text-red-600 font-medium mb-2">Fill the value</p>
-<p *ngIf="title.errors?.minlength && title.touched" class="text-red-600 font-medium mb-2">Minimal length is: 3 letters</p>
+<p *ngIf="title.errors?.minlength && title.touched" class="text-red-600 font-medium mb-2">Minimal length is: 3
+  letters</p>

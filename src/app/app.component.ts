@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {TasksService} from "./services/tasks.service";
-import {TodolistsService} from "./services/todolists.service";
-import {ITodolist} from "./models/todolists";
-import {ITasks} from "./models/tasks";
+import { Component, OnInit } from '@angular/core';
+import { TasksService } from './services/tasks.service';
+import { TodolistsService } from './services/todolists.service';
+import { ITodolist } from './models/todolists';
+import { ITasks } from './models/tasks';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  todolists: ITodolist[] = []
-  tasks: ITasks = {}
+  todolists: ITodolist[] = [];
+  tasks: ITasks = {};
 
   constructor(
     public tasksService: TasksService,
@@ -21,11 +20,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.todolistsService.todolists$.subscribe((tdl) => {
-      this.todolists = tdl
-    })
+      this.todolists = tdl;
+    });
     this.tasksService.tasks$.subscribe((tasks) => {
-      this.tasks = tasks
-    })
+      this.tasks = tasks;
+    });
   }
 
 

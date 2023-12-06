@@ -5,5 +5,5 @@ export interface ITask {
 }
 
 export interface ITasks {
-  [key: string]: ITask[]
+  [key: string]: ITask[];
 }
