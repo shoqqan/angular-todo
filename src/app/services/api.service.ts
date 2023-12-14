@@ -15,7 +15,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  public BASE_URL = 'https://todo-back-production.up.railway.app';
+  public BASE_URL = 'https://todo-back-production.up.railway.app/todolists';
   public token = this.authService.currentUserSig();
   public headers = new HttpHeaders({
     'Authorization': `Bearer ${this.token}`
@@ -27,11 +27,11 @@ export class ApiService {
 
 //TODOLIST
   getTodolists(): Observable<ITodolist[]> {
-    return this.http.get<ITodolist[]>(`${this.BASE_URL}/todolists`, {headers: this.headers});
+    return this.http.get<ITodolist[]>(`${this.BASE_URL}`, {headers: this.headers});
   }
 
   createTodolist(title: string): Observable<ITodolist> {
-    return this.http.post<ICreateTodolistsAPIResponce>(`${this.BASE_URL}/todolists`, {
+    return this.http.post<ICreateTodolistsAPIResponce>(`${this.BASE_URL}`, {
       title
     }, {headers: this.headers}).pipe(
       map(tdl => {
@@ -46,14 +46,14 @@ export class ApiService {
   }
 
   deleteTodolist(todo_id: number): Observable<number> {
-    return this.http.delete<IMessageAPIResponce>(`${this.BASE_URL}/todolists/${todo_id}`, {headers: this.headers}).pipe(
+    return this.http.delete<IMessageAPIResponce>(`${this.BASE_URL}/${todo_id}`, {headers: this.headers}).pipe(
       map(res => Number(res.id))
     );
 
   }
 
   changeTodolistName(todo_id: number, title: string): Observable<{ todo_id: number, title: string }> {
-    return this.http.put<IChangeNameAPIResponce>(`${this.BASE_URL}/todolists/${todo_id}`, {title}, {headers: this.headers}).pipe(
+    return this.http.put<IChangeNameAPIResponce>(`${this.BASE_URL}/${todo_id}`, {title}, {headers: this.headers}).pipe(
       map(res => (
           {
             todo_id: todo_id, title: res.title
@@ -65,7 +65,7 @@ export class ApiService {
 
   //TASKS
   getTasks(todo_id: number): Observable<ITask[]> {
-    return this.http.get<ITaskAPIResponce[]>(`${this.BASE_URL}/todolists/${todo_id}/tasks`, {headers: this.headers}).pipe(
+    return this.http.get<ITaskAPIResponce[]>(`${this.BASE_URL}/${todo_id}/tasks`, {headers: this.headers}).pipe(
       map(tasks => {
         return tasks.map(el => ({id: el.id, title: el.title, isDone: el.isDone}));
       })
@@ -73,7 +73,7 @@ export class ApiService {
   }
 
   createTask(todo_id: number, title: string): Observable<ITask> {
-    return this.http.post<ITaskAPIResponce>(`${this.BASE_URL}/todolists/${todo_id}/tasks`, {title}, {headers: this.headers}).pipe(
+    return this.http.post<ITaskAPIResponce>(`${this.BASE_URL}/${todo_id}/tasks`, {title}, {headers: this.headers}).pipe(
       map(task => {
         return {id: task.id, title: task.title, isDone: task.isDone};
       })
@@ -81,7 +81,7 @@ export class ApiService {
   }
 
   deleteTask(todo_id: number, task_id: number): Observable<number> {
-    return this.http.delete<IMessageAPIResponce>(`${this.BASE_URL}/todolists/${todo_id}/tasks/${task_id}`, {headers: this.headers}).pipe(
+    return this.http.delete<IMessageAPIResponce>(`${this.BASE_URL}/${todo_id}/tasks/${task_id}`, {headers: this.headers}).pipe(
       map(res => Number(res.id))
     );
   }

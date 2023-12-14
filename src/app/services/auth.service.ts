@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { ITokenAPIResponce } from '../models/api-responces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,13 @@ export class AuthService {
   public headers = new HttpHeaders({
     'Authorization': `Bearer ${this.currentUserSig()}`
   });
-  public BASE_URL = 'https://todo-back-production.up.railway.app';
+  public BASE_URL = 'https://todo-back-production.up.railway.app/auth';
 
   constructor(private http: HttpClient) {
   }
 
   login(telegram_id: number, login: string, password: string): Observable<string> {
-    return this.http.post<{ token: string }>(`${this.BASE_URL}/auth/login`, {
+    return this.http.post<ITokenAPIResponce>(`${this.BASE_URL}/login`, {
       telegram_id, login, password
     }).pipe(
       map(responce => responce.token)
@@ -24,7 +25,7 @@ export class AuthService {
   }
 
   registration(telegram_id: number, login: string, password: string) {
-    return this.http.post<{ token: string }>(`${this.BASE_URL}/auth/registration`, {
+    return this.http.post<ITokenAPIResponce>(`${this.BASE_URL}/registration`, {
       telegram_id, login, password
     }).pipe(
       map(responce => responce.token)
@@ -32,6 +33,6 @@ export class AuthService {
   }
 
   deleteAccount() {
-    return this.http.delete(`${this.BASE_URL}/auth/login`, {headers: this.headers});
+    return this.http.delete(`${this.BASE_URL}/login`, {headers: this.headers});
   }
 }

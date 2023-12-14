@@ -24,3 +24,7 @@ export interface ICreateTodolistsAPIResponce {
   updatedAt: string,
   createdAt: string
 }
+
+export interface ITokenAPIResponce {
+  token: string;
+}

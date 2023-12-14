@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-registration-page',
   templateUrl: './registration-page.component.html',
 })
-export class RegistrationPageComponent {
+export class RegistrationPageComponent implements OnInit {
 
   form = new FormGroup({
     telegram_id: new FormControl<string>('', [
@@ -23,6 +23,9 @@ export class RegistrationPageComponent {
       Validators.required
     ])
   });
+
+  signUpBtnClicked = false;
+  errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -44,14 +47,32 @@ export class RegistrationPageComponent {
   }
 
   onRegister() {
-    if (this.password === this.secondPassword) {
-      this.authService.registration(Number(this.telegram_id), this.login, this.password).subscribe(result => {
-          localStorage.setItem('token', result);
-          this.authService.currentUserSig.set(result);
-          this.router.navigateByUrl('/home');
-        }
-      );
+    this.signUpBtnClicked = true;
+    if (this.form.valid) {
+      if (this.password === this.secondPassword) {
+        this.authService.registration(Number(this.telegram_id), this.login, this.password).subscribe(result => {
+            localStorage.setItem('token', result);
+            this.authService.currentUserSig.set(result);
+            this.router.navigateByUrl('/home');
+          },
+          error => {
+            this.errorMessage = error;
+          }
+        );
+      } else {
+        this.errorMessage = 'Passwords are not the same.';
+      }
+
     }
 
+  }
+
+  redirectToSignIn() {
+    this.router.navigateByUrl('sign-in');
+  }
+
+  ngOnInit() {
+    localStorage.clear();
+    this.authService.currentUserSig.set(null);
   }
 }

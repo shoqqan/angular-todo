@@ -1,12 +1,29 @@
-<article class="w-screen h-screen flex justify-center items-center">
+<article class="w-screen h-screen flex flex-col gap-y-5 justify-center items-center">
+  <h1 class="text-2xl font-bold">Sign-in :3</h1>
   <form [formGroup]="form" class="w-80 flex flex-col gap-y-5 border p-4 rounded-2xl">
     <label for="telegram_id">Telegram ID</label>
-    <input appNumberRegex class="px-2 py-2 border rounded-lg" formControlName="telegram_id" id="telegram_id" placeholder="1777223" type="text"/>
+    <input [class.border-red-500]="form.get('telegram_id')!.invalid && loginBtnClicked" appNumberRegex
+           class="px-2 py-2 border rounded-lg transition-all]"
+           formControlName="telegram_id"
+           id="telegram_id" placeholder="1777223"
+           type="text"/>
     <label for="login">Login</label>
-    <input class="px-2 py-2 border rounded-lg" formControlName="login" id="login" placeholder="John Doe" type="text"/>
+    <input
+      [class.border-red-500]="form.get('login')!.invalid && loginBtnClicked"
+      class="px-2 py-2 border rounded-lg" formControlName="login" id="login" placeholder="John Doe" type="text"/>
     <label for="password">Password</label>
-    <input class="px-2 py-2 border rounded-lg" formControlName="password" id="password" placeholder="*********" type="password"/>
-    <button (click)="onLogin()" class="px-4 py-2 text-amber-50 bg-[#2383e2] shadow-lg rounded-xl">Login</button>
+    <input
+      [class.border-red-500]="form.get('password')!.invalid && loginBtnClicked" class="px-2 py-2 border rounded-lg"
+      formControlName="password" id="password" placeholder="*********"
+      type="password"/>
+    <p *ngIf="!!errorMessage" class="text-red-500">{{errorMessage}}</p>
+    <button (click)="onLogin()"
+            class="px-4 py-2 text-amber-50 bg-[#2383e2] shadow-lg rounded-xl transition-all hover:bg-[#0077d4]"
+            type="submit">Login
+    </button>
+    <div class="w-full flex justify-between text-sm underline hover:text-[#2383e2]">
+      <button (click)="redirectToSignUp()">Don't have an account?</button>
+    </div>
   </form>
 
 </article>
