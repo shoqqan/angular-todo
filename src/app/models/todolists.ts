@@ -1,7 +1,7 @@
 export type FilterType = 'active' | 'all' | 'done'
 
 export interface ITodolist {
-  id: string,
+  id: number,
   title: string,
   filter: FilterType
 }

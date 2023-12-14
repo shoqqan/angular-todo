@@ -1,0 +1,17 @@
+<article class="w-screen h-screen flex justify-center items-center">
+  <form [formGroup]="form" class="w-80 flex flex-col gap-y-5 border p-4 rounded-2xl">
+    <label for="telegram_id">Telegram ID</label>
+    <input appNumberRegex class="px-2 py-2 border rounded-lg" formControlName="telegram_id" id="telegram_id"
+           placeholder="1777223" type="text"/>
+    <label for="login">Login</label>
+    <input class="px-2 py-2 border rounded-lg" formControlName="login" id="login" placeholder="John Doe" type="text"/>
+    <label for="password">Password</label>
+    <input class="px-2 py-2 border rounded-lg" formControlName="password" id="password" placeholder="*********"
+           type="password"/>
+    <label for="second_password">Please write password again</label>
+    <input class="px-2 py-2 border rounded-lg" formControlName="secondPassword" id="second_password"
+           placeholder="*********" type="password"/>
+    <button (click)="onRegister()" class="px-4 py-2 text-amber-50 bg-[#2383e2] shadow-lg rounded-xl">Sign up!</button>
+  </form>
+
+</article>

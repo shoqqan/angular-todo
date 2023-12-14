@@ -1,35 +1,36 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ITask } from '../../models/tasks';
-import { TasksService } from '../../services/tasks.service';
 import { TodolistsService } from '../../services/todolists.service';
 import { FilterType } from '../../models/todolists';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-todolist',
   templateUrl: './todolist.component.html',
 })
-export class TodolistComponent implements AfterViewInit {
-  @Input() id: string;
+export class TodolistComponent implements AfterViewInit, OnInit {
+  @Input() id: number;
   @Input() title: string;
-  @Input() tasks: ITask[];
+  @Input() tasks: ITask[] = [];
+
   filter: FilterType = 'all';
   filteredTasks: ITask[] = [];
 
   constructor(
-    private tasksService: TasksService,
-    private todolistService: TodolistsService
+    private todolistService: TodolistsService,
+    private taskService: TasksService
   ) {
-    this.id = '';
+    this.id = 0;
     this.title = '';
-    this.tasks = [];
   }
+
 
   onChangeFilter(filter: FilterType) {
     this.filter = filter;
   }
 
   createTask(title: string) {
-    this.tasksService.createTask(this.id, title);
+    this.taskService.createTask(this.id, title);
   }
 
   changeTitle(title: string) {
@@ -40,7 +41,12 @@ export class TodolistComponent implements AfterViewInit {
     this.todolistService.deleteTodolist(this.id);
   }
 
+  ngOnInit(): void {
+    this.taskService.getTasksOfTodolist(this.id);
+  }
+
   ngAfterViewInit(): void {
     this.filteredTasks = this.tasks;
   }
+
 }

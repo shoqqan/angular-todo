@@ -1,9 +1,9 @@
 export interface ITask {
-  id: string,
+  id: number,
   title: string,
   isDone: boolean
 }
 
 export interface ITasks {
-  [key: string]: ITask[];
+  [key: number]: ITask[];
 }
