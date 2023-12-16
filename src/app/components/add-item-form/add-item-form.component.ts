@@ -12,7 +12,6 @@ export class AddItemFormComponent {
   form = new FormGroup({
     title: new FormControl<string>('', [
       Validators.required,
-      Validators.minLength(3)
     ])
   });
 
@@ -25,6 +24,7 @@ export class AddItemFormComponent {
     if (!this.title.errors) {
       this.addItem.emit(this.form.value.title as string);
       this.form.reset();
+      this.clicked = false;
     } else {
 //TODO
     }

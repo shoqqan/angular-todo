@@ -27,10 +27,8 @@ export class TodolistsPageComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('token');
-    this.authService.currentUserSig.set(null);
+    this.authService.setUser(null);
     this.router.navigateByUrl('sign-in');
-
 
   }
 

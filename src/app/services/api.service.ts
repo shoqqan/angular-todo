@@ -15,10 +15,9 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  public BASE_URL = 'https://todo-back-production.up.railway.app/todolists';
-  public token = this.authService.currentUserSig();
-  public headers = new HttpHeaders({
-    'Authorization': `Bearer ${this.token}`
+  private BASE_URL = 'https://todo-back-production.up.railway.app/todolists';
+  private headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.authService.token}`
   });
 
   constructor(private http: HttpClient, private authService: AuthService) {

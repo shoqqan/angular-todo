@@ -6,6 +6,5 @@
     New
   </button>
 </form>
-<p *ngIf="title.errors?.required && (title.touched || clicked)" class="text-red-600 font-medium mb-2">Fill the value</p>
-<p *ngIf="title.errors?.minlength && title.touched" class="text-red-600 font-medium mb-2">Minimal length is: 3
-  letters</p>
+<p *ngIf="title.errors?.required && clicked" class="text-red-600 font-medium mb-2">Fill the value</p>
+
