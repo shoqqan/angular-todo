@@ -1,34 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ITasks } from '../models/tasks';
-import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
-  tasks$: BehaviorSubject<ITasks> = new BehaviorSubject({} as ITasks);
-
   constructor(private apiService: ApiService) {
   }
 
   getTasksOfTodolist(todo_id: number) {
-    this.apiService.getTasks(todo_id).subscribe(
-      tsks =>
-        this.tasks$.next({
-          ...this.tasks$.value,
-          [todo_id]: tsks
-        })
-    );
+    return this.apiService.getTasks(todo_id).pipe(map(tasks => tasks.reverse()));
   }
 
   createTask(todo_id: number, title: string) {
-    this.apiService.createTask(todo_id, title).subscribe(task =>
-      this.tasks$.next({
-        ...this.tasks$.value,
-        [todo_id]: [task, ...this.tasks$.value[todo_id]]
-      })
-    );
+    return this.apiService.createTask(todo_id, title);
   }
 
   // changeTaskName(todo_id: string, id: string, title: string) {
@@ -42,9 +28,7 @@ export class TasksService {
   // }
 
   deleteTask(todo_id: number, id: number) {
-    this.apiService.deleteTask(todo_id, id).subscribe(id =>
-      this.tasks$.next({...this.tasks$.value, [todo_id]: this.tasks$.value[todo_id].filter(task => task.id != id)})
-    );
+    return this.apiService.deleteTask(todo_id, id);
   }
 
   //TODO

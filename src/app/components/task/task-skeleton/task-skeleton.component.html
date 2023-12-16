@@ -1,0 +1,12 @@
+<div *ngIf="isLoading;else elseCase" class="p-4">
+  <ngx-skeleton-loader
+    [theme]="{
+      height: '30px',
+  }"
+    animation="progress"
+    count="3"
+  ></ngx-skeleton-loader>
+</div>
+<ng-template #elseCase>
+  <ng-content/>
+</ng-template>

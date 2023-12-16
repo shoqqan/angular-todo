@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
   form = new FormGroup({
     telegram_id: new FormControl<string>('', [
       Validators.required
@@ -20,22 +20,31 @@ export class LoginPageComponent {
       Validators.required
     ])
   });
-  loginBtnClicked = false;
   errorMessage = '';
+  loginBtnClicked = false;
+  private destroyRef = inject(DestroyRef);
 
   constructor(private authService: AuthService, private router: Router) {
-    this.form.valueChanges.pipe(
-      takeUntilDestroyed()
-    ).subscribe(() => {
-      this.errorMessage = '';
-    });
+
+  }
+
+  private get telegram_id() {
+    return Number(this.form.getRawValue().telegram_id);
+  }
+
+  private get login() {
+    return this.form.getRawValue().login;
+  }
+
+  private get password() {
+    return this.form.getRawValue().password;
   }
 
 
   onLogin() {
     this.loginBtnClicked = true;
     if (this.form.valid)
-      this.authService.login(Number(this.form.getRawValue().telegram_id), this.form.getRawValue().login!, this.form.getRawValue().password!).subscribe(() => {
+      this.authService.login(this.telegram_id, this.login!, this.password!).subscribe(() => {
           this.router.navigateByUrl('/home');
         },
         () => {
@@ -46,6 +55,14 @@ export class LoginPageComponent {
 
   redirectToSignUp() {
     this.router.navigateByUrl('/sign-up');
+  }
+
+  ngOnInit() {
+    this.form.valueChanges.pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+      this.errorMessage = '';
+    });
   }
 
 

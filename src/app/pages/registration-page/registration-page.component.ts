@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-registration-page',
   templateUrl: './registration-page.component.html',
 })
 export class RegistrationPageComponent {
-
   form = new FormGroup({
     telegram_id: new FormControl<string>('', [
       Validators.required
@@ -23,34 +23,34 @@ export class RegistrationPageComponent {
       Validators.required
     ])
   });
-
   signUpBtnClicked = false;
   errorMessage = '';
+  private destroyRef = inject(DestroyRef);
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
-  get telegram_id() {
-    return this.form.get('telegram_id')!.value!;
+  private get telegram_id() {
+    return this.form.getRawValue().telegram_id;
   }
 
-  get login() {
-    return this.form.get('login')!.value!;
+  private get login() {
+    return this.form.getRawValue().login;
   }
 
-  get password() {
-    return this.form.get('password')!.value!;
+  private get password() {
+    return this.form.getRawValue().password;
   }
 
-  get secondPassword() {
-    return this.form.get('secondPassword')!.value;
+  private get secondPassword() {
+    return this.form.getRawValue().secondPassword;
   }
 
   onRegister() {
     this.signUpBtnClicked = true;
     if (this.form.valid) {
       if (this.password === this.secondPassword) {
-        this.authService.registration(Number(this.telegram_id), this.login, this.password).subscribe(result => {
+        this.authService.registration(Number(this.telegram_id), this.login!, this.password!).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.router.navigateByUrl('/home');
           },
           error => {
@@ -69,8 +69,5 @@ export class RegistrationPageComponent {
     this.router.navigateByUrl('sign-in');
   }
 
-  // ngOnInit() {
-  //   localStorage.clear();
-  //   this.authService.currentUserSig.set(null);
-  // }
+
 }

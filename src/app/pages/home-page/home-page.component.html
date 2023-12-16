@@ -20,5 +20,10 @@
   </button>
 </div>
 <div class="flex gap-2 px-6 py-5 gap-x-5 flex-wrap">
-  <app-todolist *ngFor="let tdl of todolists" [id]="tdl.id" [tasks]="tasks[tdl.id]" [title]="tdl.title"/>
+
+  <app-todolist-skeleton [isLoading]="isLoading">
+    <app-todolist (changedTitleOfTodolist)="changeTitle($event.id,$event.title)"
+                  (deletedTodolist)="delete($event)"
+                  *ngFor="let tdl of todolists" [id]="tdl.id" [title]="tdl.title"/>
+  </app-todolist-skeleton>
 </div>

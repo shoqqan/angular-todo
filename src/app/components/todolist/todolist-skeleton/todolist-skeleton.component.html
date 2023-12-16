@@ -1,0 +1,23 @@
+<div class="flex gap-5 flex-wrap">
+  <ng-container *ngFor="let item of Array(5)">
+    <div *ngIf="isLoading;else: elseCase" class="flex flex-col border px-4 py-2 rounded-xl">
+      <ngx-skeleton-loader
+        animation="pulse"
+        appearance="circle"
+        count="5"
+      ></ngx-skeleton-loader>
+
+      <ngx-skeleton-loader
+        [theme]="{
+      height: '50px',
+    }"
+        animation="pulse"
+        count="3"
+      ></ngx-skeleton-loader>
+    </div>
+  </ng-container>
+
+  <ng-template #elseCase>
+    <ng-content/>
+  </ng-template>
+</div>

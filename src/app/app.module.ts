@@ -8,11 +8,14 @@ import { AddItemFormComponent } from './components/add-item-form/add-item-form.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditableDirective } from './directives/editable.directive';
 import { FilterTasksPipe } from './pipe/filter-tasks.pipe';
-import { TodolistsPageComponent } from './pages/todolists-page/todolists-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NumberRegexDirective } from './directives/number-regex.directive';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { TodolistSkeletonComponent } from './components/todolist/todolist-skeleton/todolist-skeleton.component';
+import { TaskSkeletonComponent } from './components/task/task-skeleton/task-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +25,12 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
     AddItemFormComponent,
     EditableDirective,
     FilterTasksPipe,
-    TodolistsPageComponent,
+    HomePageComponent,
     LoginPageComponent,
     NumberRegexDirective,
     RegistrationPageComponent,
+    TodolistSkeletonComponent,
+    TaskSkeletonComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,8 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

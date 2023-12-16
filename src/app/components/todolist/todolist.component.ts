@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ITask } from '../../models/tasks';
-import { TodolistsService } from '../../services/todolists.service';
 import { FilterType } from '../../models/todolists';
 import { TasksService } from '../../services/tasks.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-todolist',
@@ -11,13 +11,15 @@ import { TasksService } from '../../services/tasks.service';
 export class TodolistComponent implements AfterViewInit, OnInit {
   @Input() id: number;
   @Input() title: string;
-  @Input() tasks: ITask[] = [];
-
+  @Output() deletedTodolist = new EventEmitter<number>();
+  @Output() changedTitleOfTodolist = new EventEmitter<{ id: number, title: string }>();
+  tasks: ITask[] = [];
   filter: FilterType = 'all';
   filteredTasks: ITask[] = [];
+  isLoading = false;
+  private destroyRef = inject(DestroyRef);
 
   constructor(
-    private todolistService: TodolistsService,
     private taskService: TasksService
   ) {
     this.id = 0;
@@ -30,19 +32,37 @@ export class TodolistComponent implements AfterViewInit, OnInit {
   }
 
   createTask(title: string) {
-    this.taskService.createTask(this.id, title);
+    this.isLoading = true;
+    this.taskService.createTask(this.id, title).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(task => {
+        this.tasks.unshift(task);
+        this.isLoading = false;
+      }
+    );
   }
 
   changeTitle(title: string) {
-    this.todolistService.changeTodolistTitle(this.id, title);
+    this.changedTitleOfTodolist.emit({id: this.id, title: title});
   }
 
   delete() {
-    this.todolistService.deleteTodolist(this.id);
+    this.deletedTodolist.emit(this.id);
+  }
+
+  deleteTask(task_id: number) {
+    this.isLoading = true;
+    this.taskService.deleteTask(this.id, task_id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(id => {
+        this.tasks = this.tasks.filter(el => el.id !== id);
+        this.isLoading = false;
+      }
+    );
   }
 
   ngOnInit(): void {
-    this.taskService.getTasksOfTodolist(this.id);
+    this.isLoading = true;
+    this.taskService.getTasksOfTodolist(this.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(tasks => {
+      this.tasks = tasks;
+      this.isLoading = false;
+    });
   }
 
   ngAfterViewInit(): void {

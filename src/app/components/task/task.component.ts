@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { TasksService } from '../../services/tasks.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-task',
@@ -10,8 +9,9 @@ export class TaskComponent {
   @Input() id: number;
   @Input() title: string;
   @Input() isDone: boolean;
+  @Output() deletedTask = new EventEmitter<number>();
 
-  constructor(private taskService: TasksService) {
+  constructor() {
     this.todo_id = 0;
     this.id = 0;
     this.title = '';
@@ -30,6 +30,6 @@ export class TaskComponent {
   }
 
   delete() {
-    this.taskService.deleteTask(this.todo_id, this.id);
+    this.deletedTask.emit(this.id);
   }
 }
