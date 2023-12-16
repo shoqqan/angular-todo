@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login-page',
@@ -23,27 +24,21 @@ export class LoginPageComponent {
   errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {
+    this.form.valueChanges.pipe(
+      takeUntilDestroyed()
+    ).subscribe(() => {
+      this.errorMessage = '';
+    });
   }
 
-  get telegram_id() {
-    return this.form.get('telegram_id')!.value!;
-  }
-
-  get login() {
-    return this.form.get('login')!.value!;
-  }
-
-  get password() {
-    return this.form.get('password')!.value!;
-  }
 
   onLogin() {
     this.loginBtnClicked = true;
     if (this.form.valid)
-      this.authService.login(Number(this.telegram_id), this.login, this.password).subscribe(result => {
+      this.authService.login(Number(this.form.getRawValue().telegram_id), this.form.getRawValue().login!, this.form.getRawValue().password!).subscribe(() => {
           this.router.navigateByUrl('/home');
         },
-        error => {
+        () => {
           this.errorMessage = 'Wrong password or login. Please try again.';
         }
       );
@@ -53,9 +48,5 @@ export class LoginPageComponent {
     this.router.navigateByUrl('/sign-up');
   }
 
-  // ngOnInit() {
-  //   // localStorage.clear();
-  //   // this.authService.currentUserSig.set(null);
-  // }
 
 }
