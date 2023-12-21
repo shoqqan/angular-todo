@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ITodolist } from '../models/todolists';
 import { ITask } from '../models/tasks';
 import {
@@ -10,6 +10,7 @@ import {
   IMessageAPIResponce,
   ITaskAPIResponce
 } from '../models/api-responces';
+import { GlobalErrorService } from './global-error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ApiService {
     'Authorization': `Bearer ${this.authService.token}`
   });
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private globalErrorService: GlobalErrorService) {
   }
 
 
@@ -81,7 +82,11 @@ export class ApiService {
 
   deleteTask(todo_id: number, task_id: number): Observable<number> {
     return this.http.delete<IMessageAPIResponce>(`${this.BASE_URL}/${todo_id}/tasks/${task_id}`, {headers: this.headers}).pipe(
-      map(res => Number(res.id))
+      map(res => Number(res.id)),
+      catchError(err => {
+        this.globalErrorService.setError(err);
+        return of(-1);
+      })
     );
   }
 

@@ -50,11 +50,12 @@ export class RegistrationPageComponent {
     this.signUpBtnClicked = true;
     if (this.form.valid) {
       if (this.password === this.secondPassword) {
-        this.authService.registration(Number(this.telegram_id), this.login!, this.password!).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        this.authService.registration(Number(this.telegram_id), this.login!, this.password!).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result) => {
+            this.authService.setUser(result);
             this.router.navigateByUrl('/home');
           },
           error => {
-            this.errorMessage = error;
+            this.errorMessage = error.message;
           }
         );
       } else {

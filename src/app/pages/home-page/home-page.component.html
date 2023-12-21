@@ -20,7 +20,9 @@
   </button>
 </div>
 <div class="flex gap-2 px-6 py-5 gap-x-5 flex-wrap">
-
+  <div *ngIf="error" class="w-full flex justify-center items-center px-4 py-4 bg-red-600 rounded-2xl">
+    <p class="text-white">{{error}}</p>
+  </div>
   <app-todolist-skeleton [isLoading]="isLoading">
     <app-todolist (changedTitleOfTodolist)="changeTitle($event.id,$event.title)"
                   (deletedTodolist)="delete($event)"
