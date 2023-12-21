@@ -13,7 +13,7 @@
 
 <br>
 
-🌐 Live Demo: <a href='https://angular-todo-gilt.vercel.app'>Live Demo</a>
+🌐 Live Demo: <a href='https://angular-todo-gilt.vercel.app/sign-in'>Live Demo</a>
 
 <h3>Created with:</h3>
 
