@@ -2,7 +2,8 @@ import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output 
 
 
 @Directive({
-  selector: '[appEditable]'
+  selector: '[appEditable]',
+  standalone: true
 })
 export class EditableDirective {
 

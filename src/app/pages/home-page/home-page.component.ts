@@ -1,19 +1,19 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ITodolist } from '../../models/todolists';
-import { TodolistsService } from '../../services/todolists.service';
+import { TodolistsService } from '../../todolists/services/todolists.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { GlobalErrorService } from '../../services/global-error.service';
+import { Todolist } from '../../todolists/interfaces/todolists';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent implements OnInit {
-  todolists: ITodolist[] = [];
-  isLoading = false;
+  todolists: Todolist[] = [];
+  isLoading = true;
   private destroyRef = inject(DestroyRef);
 
   constructor(
@@ -28,6 +28,20 @@ export class HomePageComponent implements OnInit {
     return this.globalErrorService.errorMessage;
   }
 
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.todolistsService.getTodolists().pipe(
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => {
+        this.isLoading = false;
+      })).subscribe(
+      tdls => {
+        this.todolists = tdls;
+        this.isLoading = false;
+      }
+    );
+  }
+
   createTodolist(title: string) {
     this.isLoading = true;
     this.todolistsService.createTodolist(title).pipe(
@@ -37,10 +51,7 @@ export class HomePageComponent implements OnInit {
       })).subscribe(
       tdl => {
         this.todolists.push(tdl);
-      },
-      error => {
-        this.globalErrorService.setError(error.error.message);
-      },
+      }
     );
   }
 
@@ -55,10 +66,7 @@ export class HomePageComponent implements OnInit {
       id => {
         this.todolists = this.todolists.filter(tdl => tdl.id !== id);
         this.isLoading = false;
-      },
-      error => {
-        this.globalErrorService.setError(error.error.message);
-      },
+      }
     );
   }
 
@@ -75,10 +83,7 @@ export class HomePageComponent implements OnInit {
           title: values.title
         } : {...tdl});
         this.isLoading = false;
-      },
-      error => {
-        this.globalErrorService.setError(error.error.message);
-      },
+      }
     );
   }
 
@@ -87,25 +92,4 @@ export class HomePageComponent implements OnInit {
     this.router.navigateByUrl('sign-in');
   }
 
-  ngOnInit(): void {
-    this.isLoading = true;
-    this.todolistsService.getTodolists().pipe(
-      takeUntilDestroyed(this.destroyRef),
-      finalize(() => {
-        this.isLoading = false;
-      })).subscribe(
-      tdls => {
-        this.todolists = tdls;
-        this.isLoading = false;
-      },
-      error => {
-        if (error.status == 401) {
-          this.authService.setUser(null);
-          this.router.navigateByUrl('sign-in');
-        } else {
-          this.globalErrorService.setError(error.error.message);
-        }
-      },
-    );
-  }
 }

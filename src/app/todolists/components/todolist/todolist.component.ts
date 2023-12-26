@@ -1,10 +1,9 @@
 import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { ITask } from '../../models/tasks';
-import { FilterType } from '../../models/todolists';
-import { TasksService } from '../../services/tasks.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { GlobalErrorService } from '../../services/global-error.service';
 import { finalize } from 'rxjs';
+import { FilterType } from '../../interfaces/todolists';
+import { Task } from '../../../tasks/interfaces/tasks';
+import { TasksService } from '../../../tasks/services/tasks.service';
 
 @Component({
   selector: 'app-todolist',
@@ -15,19 +14,31 @@ export class TodolistComponent implements OnInit {
   @Input() title: string;
   @Output() deletedTodolist = new EventEmitter<number>();
   @Output() changedTitleOfTodolist = new EventEmitter<{ id: number, title: string }>();
-  tasks: ITask[] = [];
-  filter: FilterType = 'all';
+  tasks: Task[] = [];
+  filter: FilterType = FilterType.ALL;
   isLoading = false;
+  protected readonly FilterType = FilterType;
   private destroyRef = inject(DestroyRef);
 
   constructor(
     private taskService: TasksService,
-    private globalErrorService: GlobalErrorService
   ) {
     this.id = 0;
     this.title = '';
   }
 
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.taskService.getTasksOfTodolist(this.id).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => {
+        this.isLoading = false;
+      })).subscribe(
+      tasks => {
+        this.tasks = tasks;
+        this.isLoading = false;
+      });
+  }
 
   onChangeFilter(filter: FilterType) {
     this.filter = filter;
@@ -43,9 +54,6 @@ export class TodolistComponent implements OnInit {
       task => {
         this.tasks.unshift(task);
       },
-      error => {
-        this.globalErrorService.setError(error.error.message);
-      }
     );
   }
 
@@ -69,28 +77,6 @@ export class TodolistComponent implements OnInit {
         this.tasks = this.tasks.filter(el => el.id !== id);
         this.isLoading = false;
       },
-      error => {
-        console.log('error');
-        this.globalErrorService.setError(error.error.message);
-      }
     );
   }
-
-  ngOnInit(): void {
-    this.isLoading = true;
-    this.taskService.getTasksOfTodolist(this.id).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      finalize(() => {
-        this.isLoading = false;
-      })).subscribe(
-      tasks => {
-        this.tasks = tasks;
-        this.isLoading = false;
-      },
-      error => {
-        this.globalErrorService.setError(error.error.message);
-      });
-  }
-
-
 }

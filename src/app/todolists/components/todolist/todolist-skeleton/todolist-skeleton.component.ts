@@ -5,10 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './todolist-skeleton.component.html',
 })
 export class TodolistSkeletonComponent {
-  @Input() isLoading: boolean;
+  @Input() count = 1;
   protected readonly Array = Array;
-
-  constructor() {
-    this.isLoading = true;
-  }
 }

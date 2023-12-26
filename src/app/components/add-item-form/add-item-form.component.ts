@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgIf, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-item-form',
   templateUrl: './add-item-form.component.html',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, TitleCasePipe, NgIf],
 })
 export class AddItemFormComponent {
   @Input() placehold = '';

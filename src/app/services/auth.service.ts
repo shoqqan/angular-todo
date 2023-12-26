@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';
-import { ITokenAPIResponce } from '../models/api-responces';
+import { TokenAPIResponce } from '../models/api-responces';
 
 type TokenType = string | null | undefined
 
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   public login(telegram_id: number, login: string, password: string): Observable<string> {
-    return this.http.post<ITokenAPIResponce>(`${this.BASE_URL}/login`, {
+    return this.http.post<TokenAPIResponce>(`${this.BASE_URL}/login`, {
       telegram_id, login, password
     }).pipe(
       map(responce => responce.token),
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   public registration(telegram_id: number, login: string, password: string) {
-    return this.http.post<ITokenAPIResponce>(`${this.BASE_URL}/registration`, {
+    return this.http.post<TokenAPIResponce>(`${this.BASE_URL}/registration`, {
       telegram_id, login, password
     }).pipe(
       map(responce => responce.token),

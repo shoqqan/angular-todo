@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITask } from '../models/tasks';
-import { FilterType } from '../models/todolists';
+import { FilterType } from '../interfaces/todolists';
+import { Task } from '../../tasks/interfaces/tasks';
 
 @Pipe({
   name: 'filterTasks'
 })
 export class FilterTasksPipe implements PipeTransform {
 
-  transform(value: ITask[], filter: FilterType): ITask[] {
+  transform(value: Task[], filter: FilterType): Task[] {
     switch (filter) {
-      case 'all':
+      case FilterType.ALL:
         return value;
-      case 'done':
+      case FilterType.DONE:
         return value.filter(el => el.isDone);
-      case 'active':
+      case FilterType.ACTIVE:
         return value.filter(el => !el.isDone);
     }
   }
