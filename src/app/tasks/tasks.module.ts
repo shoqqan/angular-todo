@@ -7,7 +7,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 @NgModule({
-  exports: [TaskComponent],
+  exports: [TaskComponent, TaskSkeletonComponent],
   declarations: [
     TaskComponent,
     TaskSkeletonComponent

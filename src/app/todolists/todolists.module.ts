@@ -13,6 +13,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 @NgModule({
   exports: [
     TodolistComponent,
+    TodolistSkeletonComponent
   ],
   declarations: [
     TodolistComponent,

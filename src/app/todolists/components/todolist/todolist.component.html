@@ -12,6 +12,7 @@
   </div>
   <app-add-item-form (addItem)="createTask($event)" placehold="create task"/>
   <div class="flex flex-col bg-white border rounded-2xl">
+    <app-task-skeleton [isLoading]="isLoading"/>
     <app-task (deletedTask)="deleteTask($event)" *ngFor="let task of tasks | filterTasks:filter"
               [id]="task.id" [isDone]="task.isDone"
               [title]="task.title"
@@ -30,5 +31,5 @@
     </button>
   </div>
 </div>
-<!--<app-todolist-skeleton *ngIf="isTodolistLoading"/>-->
+<app-todolist-skeleton *ngIf="isTodolistLoading"/>
 

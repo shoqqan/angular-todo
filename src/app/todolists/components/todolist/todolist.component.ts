@@ -12,11 +12,12 @@ import { TasksService } from '../../../tasks/services/tasks.service';
 export class TodolistComponent implements OnInit {
   @Input() id: number;
   @Input() title: string;
+  @Input() isTodolistLoading: boolean;
   @Output() deletedTodolist = new EventEmitter<number>();
   @Output() changedTitleOfTodolist = new EventEmitter<{ id: number, title: string }>();
   tasks: Task[] = [];
+  isLoading = true;
   filter: FilterType = FilterType.ALL;
-  isLoading = false;
   protected readonly FilterType = FilterType;
   private destroyRef = inject(DestroyRef);
 
@@ -25,6 +26,7 @@ export class TodolistComponent implements OnInit {
   ) {
     this.id = 0;
     this.title = '';
+    this.isTodolistLoading = true;
   }
 
   ngOnInit(): void {
