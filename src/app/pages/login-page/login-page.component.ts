@@ -10,13 +10,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class LoginPageComponent implements OnInit {
   form = new FormGroup({
-    telegram_id: new FormControl<string>('', [
+    telegram_id: new FormControl<string>('100505', [
       Validators.required
     ]),
-    login: new FormControl<string>('', [
+    login: new FormControl<string>('shoqqan', [
       Validators.required,
     ]),
-    password: new FormControl<string>('', [
+    password: new FormControl<string>('777', [
       Validators.required
     ])
   });
