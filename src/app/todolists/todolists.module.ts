@@ -5,7 +5,7 @@ import { FilterTasksPipe } from './pipes/filter-tasks.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TasksModule } from '../tasks/tasks.module';
 import { AddItemFormComponent } from '../components/add-item-form/add-item-form.component';
-import { EditableDirective } from '../directives/editable.directive';
+import { EditableDirective } from '../directives/editable/editable.directive';
 import { TodolistSkeletonComponent } from './components/todolist/todolist-skeleton/todolist-skeleton.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 

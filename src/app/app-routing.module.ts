@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
-import { notLoggedInGuard } from './guards/not-logged-in.guard';
-import { loggedInGuard } from './guards/logged-in.guard';
+import { notLoggedInGuard } from './guards/not-logged-in/not-logged-in.guard';
+import { loggedInGuard } from './guards/logged-in/logged-in.guard';
 import { AuthResolver } from './resolvers/auth.resolver';
 
 const routes: Routes = [

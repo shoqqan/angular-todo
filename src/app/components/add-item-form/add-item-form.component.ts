@@ -17,9 +17,14 @@ export class AddItemFormComponent {
       Validators.required,
     ])
   });
+  errorMessage = '';
 
-  get title() {
+  get title(): FormControl {
     return this.form.controls.title as FormControl;
+  }
+
+  get placeholder(): string {
+    return this.placehold;
   }
 
   onAddItem() {
@@ -29,7 +34,7 @@ export class AddItemFormComponent {
       this.form.reset();
       this.clicked = false;
     } else {
-//TODO
+      this.errorMessage = 'Fill the value';
     }
   }
 }

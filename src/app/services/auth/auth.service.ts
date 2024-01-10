@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';
-import { TokenAPIResponce } from '../models/api-responces';
+import { TokenAPIResponce } from '../../models/api-responces';
 
 type TokenType = string | null | undefined
 

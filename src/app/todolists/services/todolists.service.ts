@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { ChangeNameAPIResponce, CreateTodolistsAPIResponce, MessageAPIResponce } from '../../models/api-responces';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { GlobalErrorService } from '../../services/global-error.service';
+import { GlobalErrorService } from '../../services/global-error/global-error.service';
 import { FilterType, Todolist } from '../interfaces/todolists';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class TodolistsService {
           this.authService.setUser(null);
           this.router.navigateByUrl('sign-in');
         } else {
-          this.globalErrorService.setError(err.error.message);
+          this.globalErrorService.error = err.error.message;
         }
         return of();
       })
@@ -45,7 +45,7 @@ export class TodolistsService {
         return newTodolist;
       }),
       catchError(err => {
-        this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
         return of();
       })
     );
@@ -60,7 +60,7 @@ export class TodolistsService {
         )
       ),
       catchError(err => {
-        this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
         return of();
       })
     );
@@ -70,7 +70,7 @@ export class TodolistsService {
     return this.http.delete<MessageAPIResponce>(`${this.BASE_URL}/${todo_id}`).pipe(
       map(res => Number(res.id)),
       catchError(err => {
-        this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
         return of();
       })
     );

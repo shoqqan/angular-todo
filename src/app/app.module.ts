@@ -6,12 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NumberRegexDirective } from './directives/number-regex.directive';
+import { NumberRegexDirective } from './directives/number-regex/number-regex.directive';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { TodolistsModule } from './todolists/todolists.module';
-import { EditableDirective } from './directives/editable.directive';
+import { EditableDirective } from './directives/editable/editable.directive';
 import { AddItemFormComponent } from './components/add-item-form/add-item-form.component';
 
 @NgModule({

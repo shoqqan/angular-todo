@@ -1,10 +1,10 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TodolistsService } from '../../todolists/services/todolists.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
-import { GlobalErrorService } from '../../services/global-error.service';
+import { GlobalErrorService } from '../../services/global-error/global-error.service';
 import { Todolist } from '../../todolists/interfaces/todolists';
 
 @Component({
@@ -25,7 +25,7 @@ export class HomePageComponent implements OnInit {
   }
 
   get error() {
-    return this.globalErrorService.errorMessage;
+    return this.globalErrorService.error;
   }
 
   ngOnInit(): void {

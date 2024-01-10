@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { MessageAPIResponce, TaskAPIResponce } from '../../models/api-responces';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
-import { GlobalErrorService } from '../../services/global-error.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { GlobalErrorService } from '../../services/global-error/global-error.service';
 import { Task } from '../interfaces/tasks';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class TasksService {
         return tasks.map(el => ({id: el.id, title: el.title, isDone: el.isDone})).reverse();
       }),
       catchError(err => {
-          this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
           return of([]);
         }
       )
@@ -35,7 +35,7 @@ export class TasksService {
       }),
       catchError(err => {
         // console.log(err);
-        this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
         return of();
       })
     );
@@ -55,7 +55,7 @@ export class TasksService {
     return this.http.delete<MessageAPIResponce>(`${this.BASE_URL}/${todo_id}/tasks/${id}`).pipe(
       map(res => Number(res.id)),
       catchError(err => {
-        this.globalErrorService.setError(err.error.message);
+        this.globalErrorService.error = err.error.message;
         return of();
       })
     );
